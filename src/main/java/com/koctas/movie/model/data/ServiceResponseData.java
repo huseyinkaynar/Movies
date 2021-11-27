@@ -1,5 +1,6 @@
-package com.koctas.movie.model.dto;
+package com.koctas.movie.model.data;
 
+import com.koctas.movie.model.ProcessStatus;
 import lombok.Data;
 
 /**
@@ -7,9 +8,9 @@ import lombok.Data;
  */
 @Data
 public class ServiceResponseData {
-    private String status;
+    private ProcessStatus status;
     private String errorMessage;
     private String errorMessageDetail;
-    private String detail;
     private Object data;
+
 }
