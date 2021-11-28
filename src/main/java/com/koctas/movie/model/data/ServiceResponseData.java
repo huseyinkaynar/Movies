@@ -1,6 +1,6 @@
 package com.koctas.movie.model.data;
 
-import com.koctas.movie.model.ProcessStatus;
+import com.koctas.movie.model.enums.ProcessStatus;
 import lombok.Data;
 
 /**

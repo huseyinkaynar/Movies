@@ -1,10 +1,11 @@
 package com.koctas.movie.controller;
 
-import com.koctas.movie.model.ProcessStatus;
 import com.koctas.movie.model.data.ServiceResponseData;
+import com.koctas.movie.model.enums.ProcessStatus;
 import com.koctas.movie.service.exception.model.ModelNotFoundException;
 import com.koctas.movie.service.exception.model.ModelRemoveException;
 import com.koctas.movie.service.exception.model.ModelSaveException;
+import com.koctas.movie.service.exception.model.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +35,7 @@ public class ExceptionHelper {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler(value = {ModelSaveException.class, ModelRemoveException.class, ModelNotFoundException.class})
+    @ExceptionHandler(value = {ModelSaveException.class, ModelRemoveException.class, ModelNotFoundException.class, UserException.class})
     public ResponseEntity<ServiceResponseData> handleModelException(RuntimeException ex) {
         log.error(ex.getMessage());
         return new ResponseEntity<>(fillServiceResponseData(ex), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -68,15 +69,20 @@ public class ExceptionHelper {
                     ((ConstraintViolationException) ((TransactionSystemException) ex).getRootCause());
             Set<ConstraintViolation<?>> constraintViolations = modelValidatorEx.getConstraintViolations();
             if (CollectionUtils.isNotEmpty(constraintViolations)) {
+
                 var message = messageSource.getMessage(StringUtils.substringBetween(constraintViolations.iterator().next().getMessage(), "{", "}"), null, null);
+                log.error(String.join("Exception: ", message));
                 serviceResponseData.setErrorMessage(message);
             } else {
+                log.error(String.join("Exception: ", ExceptionUtils.getMessage(ex)));
                 serviceResponseData.setErrorMessage(ExceptionUtils.getMessage(ex));
             }
         } else if (ex instanceof DataIntegrityViolationException) {
+            log.error(String.join("Exception: ", ex.getMessage()));
             serviceResponseData.setErrorMessage(messageSource.getMessage(ex.getMessage(), null, null));
 
         } else {
+            log.error(String.join("Exception: ", ExceptionUtils.getMessage(ex)));
             serviceResponseData.setErrorMessage(ExceptionUtils.getMessage(ex));
         }
         serviceResponseData.setErrorMessageDetail(Arrays.asList(ExceptionUtils.getStackFrames(ex)).stream().limit(10).collect(Collectors.joining()));

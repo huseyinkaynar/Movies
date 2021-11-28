@@ -1,8 +1,8 @@
 package com.koctas.movie.controller;
 
-import com.koctas.movie.model.ProcessStatus;
 import com.koctas.movie.model.data.MovieData;
 import com.koctas.movie.model.data.ServiceResponseData;
+import com.koctas.movie.model.enums.ProcessStatus;
 import com.koctas.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hkaynar on 27.11.2021
  */
 @RestController
-@RequestMapping("movies")
+@RequestMapping("/api/movies")
 public class MovieController {
 
     @Autowired
@@ -35,6 +35,7 @@ public class MovieController {
         return serviceResponseData;
 
     }
+
     @GetMapping("/{id}")
     public ServiceResponseData getMovie(@PathVariable long id) {
         var movieData = movieService.getMovieByCode(id);

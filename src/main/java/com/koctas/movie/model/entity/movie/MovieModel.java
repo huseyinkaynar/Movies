@@ -1,4 +1,4 @@
-package com.koctas.movie.model.entity;
+package com.koctas.movie.model.entity.movie;
 
 import lombok.Data;
 

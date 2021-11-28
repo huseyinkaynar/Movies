@@ -1,6 +1,6 @@
 package com.koctas.movie.repository;
 
-import com.koctas.movie.model.entity.MovieModel;
+import com.koctas.movie.model.entity.movie.MovieModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

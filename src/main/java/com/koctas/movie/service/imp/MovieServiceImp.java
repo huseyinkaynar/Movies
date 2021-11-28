@@ -1,7 +1,7 @@
 package com.koctas.movie.service.imp;
 
 import com.koctas.movie.model.data.MovieData;
-import com.koctas.movie.model.entity.MovieModel;
+import com.koctas.movie.model.entity.movie.MovieModel;
 import com.koctas.movie.repository.MovieRepository;
 import com.koctas.movie.service.MovieService;
 import com.koctas.movie.service.exception.model.ModelNotFoundException;
@@ -31,6 +31,7 @@ public class MovieServiceImp implements MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -39,6 +40,7 @@ public class MovieServiceImp implements MovieService {
 
         var movies = movieRepository.findAll();
         if (CollectionUtils.isEmpty(movies)) {
+            log.error("Not found MovieModel");
             throw new ModelNotFoundException("Not found MovieModel");
         }
         return List.of(modelMapper.map(movies, MovieData[].class));
@@ -105,6 +107,7 @@ public class MovieServiceImp implements MovieService {
         try {
             var mediaModel = movieRepository.getMovieModelById(id);
             if (Objects.isNull(mediaModel)) {
+                log.error("Model Remove Exception...MediaModel is null");
                 throw new ModelRemoveException("Model Remove Exception...MediaModel is null");
             }
             movieRepository.delete(mediaModel);
@@ -113,6 +116,5 @@ public class MovieServiceImp implements MovieService {
             log.error("Error while removing model.Error message : {}", e.getMessage());
             throw new ModelRemoveException("Model Remove Exception.... " + e.getMessage());
         }
-
     }
 }

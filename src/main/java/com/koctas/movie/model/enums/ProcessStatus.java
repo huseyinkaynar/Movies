@@ -1,4 +1,4 @@
-package com.koctas.movie.model;
+package com.koctas.movie.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
