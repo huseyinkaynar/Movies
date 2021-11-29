@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface MovieService {
 
-    List<MovieData> getAllMovie();
+    List<MovieData> getAllMovies();
 
-    MovieData getMovieByCode(long id);
+    MovieData getMovieById(long id);
 
     void saveMovieFromExternalService();
 

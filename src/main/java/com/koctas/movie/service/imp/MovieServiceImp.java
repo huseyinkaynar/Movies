@@ -26,17 +26,20 @@ import java.util.Objects;
 @Slf4j
 public class MovieServiceImp implements MovieService {
 
+
     @Value("${external.service.url}")
     private String SERVICE_URL;
 
-    @Autowired
     private MovieRepository movieRepository;
 
+    public MovieServiceImp(MovieRepository movieRepository){
+        this.movieRepository=movieRepository;
+    }
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public List<MovieData> getAllMovie() {
+    public List<MovieData> getAllMovies() {
 
         var movies = movieRepository.findAll();
         if (CollectionUtils.isEmpty(movies)) {
@@ -47,7 +50,7 @@ public class MovieServiceImp implements MovieService {
     }
 
     @Override
-    public MovieData getMovieByCode(long id) {
+    public MovieData getMovieById(long id) {
         var movieModel = movieRepository.getMovieModelById(id);
         if (Objects.isNull(movieModel)) {
             log.error("{} movieModel not found", id);

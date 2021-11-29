@@ -54,9 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/api/movies").hasAnyAuthority("ROLE_USER")
+                .antMatchers("/api/movies").hasAnyAuthority("ROLE_USER")
                 .antMatchers("/api/api/movies/**").hasAnyAuthority("ROLE_MODERATOR")
-                .antMatchers("/api/movies/save-from-external-service").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/movies/**","/api/users/**").hasAnyAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

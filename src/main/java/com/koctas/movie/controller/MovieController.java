@@ -28,7 +28,7 @@ public class MovieController {
 
     @GetMapping
     public ServiceResponseData getMovies() {
-        var movieData = movieService.getAllMovie();
+        var movieData = movieService.getAllMovies();
         var serviceResponseData = new ServiceResponseData();
         serviceResponseData.setData(movieData);
         serviceResponseData.setStatus(ProcessStatus.SUCCESS);
@@ -38,7 +38,7 @@ public class MovieController {
 
     @GetMapping("/{id}")
     public ServiceResponseData getMovie(@PathVariable long id) {
-        var movieData = movieService.getMovieByCode(id);
+        var movieData = movieService.getMovieById(id);
         var serviceResponseData = new ServiceResponseData();
         serviceResponseData.setData(movieData);
         serviceResponseData.setStatus(ProcessStatus.SUCCESS);
